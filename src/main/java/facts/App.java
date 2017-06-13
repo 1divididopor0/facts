@@ -15,7 +15,7 @@ import java.util.concurrent.TimeUnit;
 public class App  {
 
     public static void main (String[] args ) throws InterruptedException {
-        System.setProperty("webdriver.gecko.driver","C:\\Users\\MindSparkQA\\workspace\\facts\\geckodriver.exe");
+        System.setProperty("webdriver.gecko.driver","C:\\Users\\MindSparkQA\\Documents\\facts\\geckodriver.exe");
 
         FirefoxDriver driver = new FirefoxDriver();
         //WebDriver driver = new ChromeDriver();
