@@ -41,7 +41,7 @@ public class App  {
 
         /****************************** Main Page ********************************************/
 
-        /** WebElement element4= driver.findElement(By.xpath("//*[@class='control-label' and contains(text(),'Department')]"));
+        WebElement element4= driver.findElement(By.xpath("//*[@class='control-label' and contains(text(),'Department')]"));
         fnHighlightMe(driver,element4);
 
 
@@ -65,25 +65,25 @@ public class App  {
 
         Select select3 = new Select(driver.findElement(By.xpath("//select[@ng-model='vm.venueId']")));
 
-        select3.selectByVisibleText("Comerica Park"); **/
+        select3.selectByVisibleText("Comerica Park");
 
         /**************************************** Reports Page **************************************************/
 
 
 
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-        WebElement element5= driver.findElement(By.xpath("//ul[@id='main-menu']/li[5]"));
-        fnHighlightMe(driver,element5);
-        element5.click();
+        WebElement element7= driver.findElement(By.xpath("//ul[@id='main-menu']/li[5]"));
+        fnHighlightMe(driver,element7);
+        element7.click();
 
         WebDriverWait wait = new WebDriverWait(driver,10);
         wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//ul[@id='main-menu']/li[5]/ul/li[1]")));
-        WebElement element6= driver.findElement(By.xpath("//ul[@id='main-menu']/li[5]/ul/li[1]"));
-        fnHighlightMe(driver,element6);
+        WebElement element8= driver.findElement(By.xpath("//ul[@id='main-menu']/li[5]/ul/li[1]"));
+        fnHighlightMe(driver,element8);
 
         String mainWindowHanhle=driver.getWindowHandle();
 
-        element6.click();
+        element8.click();
 
 
 
@@ -94,19 +94,19 @@ public class App  {
         driver.switchTo().window((String) childParentHandles.toArray()[0]);
 
        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-        WebElement element7= driver.findElement(By.xpath("//div[@label='Payroll Date From']/div[@class='input-group date date-picker']/input[@class='form-control medium']"));
-        fnHighlightMe(driver,element7);
-        element7.clear();
-        element7.sendKeys("06/10/2017");
-
-        WebElement element8= driver.findElement(By.xpath("//div[@label='Payroll Date To']/div[@class='input-group date date-picker']/input[@class='form-control medium']"));
-        fnHighlightMe(driver,element8);
-        element8.clear();
-        element8.sendKeys("06/20/2017");
-
-        WebElement element9= driver.findElement(By.xpath("//*[@id='command-bar-section']/command-button"));
+        WebElement element9= driver.findElement(By.xpath("//div[@label='Payroll Date From']/div[@class='input-group date date-picker']/input[@class='form-control medium']"));
         fnHighlightMe(driver,element9);
-        element9.click();
+        element9.clear();
+        element9.sendKeys("06/10/2017");
+
+        WebElement element10= driver.findElement(By.xpath("//div[@label='Payroll Date To']/div[@class='input-group date date-picker']/input[@class='form-control medium']"));
+        fnHighlightMe(driver,element10);
+        element10.clear();
+        element10.sendKeys("06/20/2017");
+
+        WebElement element11= driver.findElement(By.xpath("//*[@id='command-bar-section']/command-button"));
+        fnHighlightMe(driver,element11);
+        element11.click();
         driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
 
         /************************************** Final Print Page *****************************************/
@@ -122,9 +122,9 @@ public class App  {
         Select select5 = new Select(driver.findElement(By.xpath("//select[@id='reportViewer_ReportToolbar_ExportGr_FormatList_DropDownList']")));
         select5.selectByVisibleText("Acrobat (PDF) file");
 
-        WebElement element10= driver.findElement(By.xpath("//input[@class='Enabled' and @title='Print']"));
-        fnHighlightMe(driver,element10);
-        element10.click();
+        WebElement element12= driver.findElement(By.xpath("//input[@class='Enabled' and @title='Print']"));
+        fnHighlightMe(driver,element12);
+        element12.click();
 
         //driver.close();
         //driver.quit();
