@@ -41,6 +41,7 @@ public class App  {
 
         /****************************** Main Page ********************************************/
 
+        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         WebElement element4= driver.findElement(By.xpath("//*[@class='control-label' and contains(text(),'Department')]"));
         fnHighlightMe(driver,element4);
 
@@ -93,7 +94,7 @@ public class App  {
         childParentHandles.remove(mainWindowHanhle);
         driver.switchTo().window((String) childParentHandles.toArray()[0]);
 
-       driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         WebElement element9= driver.findElement(By.xpath("//div[@label='Payroll Date From']/div[@class='input-group date date-picker']/input[@class='form-control medium']"));
         fnHighlightMe(driver,element9);
         element9.clear();
