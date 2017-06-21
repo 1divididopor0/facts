@@ -42,7 +42,7 @@ public class App  {
 
         /****************************** Main Page ********************************************/
 
-        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+        driver.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);
         WebElement element4= driver.findElement(By.xpath("//*[@class='control-label' and contains(text(),'Department')]"));
         fnHighlightMe(driver,element4);
 
@@ -88,8 +88,7 @@ public class App  {
         final int prevWndCount = driver.getWindowHandles().size();
 
         element8.click();
-        WebDriverWait wait2 = new WebDriverWait(driver,5);
-        wait2.until(new ExpectedCondition<Boolean>(){
+        wait.until(new ExpectedCondition<Boolean>(){
             public Boolean apply(WebDriver d){
                 return d.getWindowHandles().size() > prevWndCount;
             }
@@ -118,8 +117,7 @@ public class App  {
         final int prevWndCount2 = driver.getWindowHandles().size();
         element11.click();
         //driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
-        WebDriverWait wait3 = new WebDriverWait(driver,5);
-        wait3.until(new ExpectedCondition<Boolean>(){
+        wait.until(new ExpectedCondition<Boolean>(){
             public Boolean apply(WebDriver d){
                 return d.getWindowHandles().size() > prevWndCount2;
             }
@@ -135,8 +133,8 @@ public class App  {
         captureScreenShot(driver);
 
         driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
-//        WebDriverWait wait4 = new WebDriverWait(driver,5);
 
+        wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//select[@id='reportViewer_ReportToolbar_ExportGr_FormatList_DropDownList']")));
         Select select5 = new Select(driver.findElement(By.xpath("//select[@id='reportViewer_ReportToolbar_ExportGr_FormatList_DropDownList']")));
         select5.selectByVisibleText("Acrobat (PDF) file");
 
