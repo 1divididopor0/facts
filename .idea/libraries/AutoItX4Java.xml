@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="AutoItX4Java">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/lib/AutoItX4Java.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/jacob.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

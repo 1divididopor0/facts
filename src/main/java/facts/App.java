@@ -1,5 +1,7 @@
 package facts;
 
+import autoitx4java.AutoItX;
+import com.jacob.com.LibraryLoader;
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.*;
 import org.openqa.selenium.firefox.FirefoxDriver;
@@ -42,7 +44,7 @@ public class App  {
 
         /****************************** Main Page ********************************************/
 
-        driver.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);
+        driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
         WebElement element4= driver.findElement(By.xpath("//*[@class='control-label' and contains(text(),'Department')]"));
         fnHighlightMe(driver,element4);
 
@@ -141,6 +143,15 @@ public class App  {
         WebElement element12= driver.findElement(By.xpath("//input[@class='Enabled' and @title='Print']"));
         fnHighlightMe(driver,element12);
         element12.click();
+
+        /*************************************** PDF Export Box ******************************************/
+        String jacobDllVersionToUse = "jacob-1.18-x64.dll";
+        File file = new File("lib",jacobDllVersionToUse);
+        System.setProperty(LibraryLoader.JACOB_DLL_PATH, file.getAbsolutePath());
+        AutoItX x = new AutoItX();
+        x.winActivate("Opening AtlPerEventPaymentsReport.pdf");
+        x.sleep(2000);
+        x.controlSend("Opening AtlPerEventPaymentsReport.pdf","","","{ENTER}");
 
         //driver.close();
         //driver.quit();
