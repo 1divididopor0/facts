@@ -48,9 +48,7 @@ public class App  {
         WebElement element4= driver.findElement(By.xpath("//*[@class='control-label' and contains(text(),'Department')]"));
         fnHighlightMe(driver,element4);
 
-
         Select select1 = new Select(driver.findElement(By.xpath("//select[@ng-model='vm.departmentId']")));
-
         select1.selectByVisibleText("MLB Remote");
 
         driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
@@ -59,7 +57,6 @@ public class App  {
         fnHighlightMe(driver,element5);
 
         Select select2 = new Select(driver.findElement(By.xpath("//select[@ng-model='vm.location']")));
-
         select2.selectByVisibleText("Detroit, MI");
 
         driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
@@ -68,101 +65,40 @@ public class App  {
         fnHighlightMe(driver,element6);
 
         Select select3 = new Select(driver.findElement(By.xpath("//select[@ng-model='vm.venueId']")));
-
         select3.selectByVisibleText("Comerica Park");
 
-        /**************************************** Reports Page **************************************************/
-
-
+        /**************************************** AtlPerEventPaymentsReport Page **************************************************/
 
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+        final int prevWndCount = driver.getWindowHandles().size();
         WebElement element7= driver.findElement(By.xpath("//ul[@id='main-menu']/li[5]"));
         fnHighlightMe(driver,element7);
         element7.click();
-
-        WebDriverWait wait = new WebDriverWait(driver,10);
-        wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//ul[@id='main-menu']/li[5]/ul/li[1]")));
         WebElement element8= driver.findElement(By.xpath("//ul[@id='main-menu']/li[5]/ul/li[1]"));
         fnHighlightMe(driver,element8);
-
-        String mainWindowHandle=driver.getWindowHandle();
-
-        final int prevWndCount = driver.getWindowHandles().size();
-
         element8.click();
-        wait.until(new ExpectedCondition<Boolean>(){
-            public Boolean apply(WebDriver d){
-                return d.getWindowHandles().size() > prevWndCount;
-            }
-        });
+        downloadReportPdf(driver,prevWndCount);
 
+        /**************************************** AtlRecurringPaymentsReport Page **************************************************/
 
-       /************************************** Print Page *****************************************************/
-        Set<String> childParentHandles=driver.getWindowHandles();
-        childParentHandles.remove(mainWindowHandle);
-        String childWindowHandle = (String)childParentHandles.toArray()[0];
-        driver.switchTo().window(childWindowHandle);
+        fnHighlightMe(driver,element7);
+        element7.click();
+        WebElement element13 = driver.findElement(By.xpath("//ul[@id='main-menu']/li[5]/ul/li[2]"));
+        fnHighlightMe(driver,element13);
+        element13.click();
+        downloadReportPdf(driver,prevWndCount);
 
-        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-        WebElement element9= driver.findElement(By.xpath("//div[@label='Payroll Date From']/div[@class='input-group date date-picker']/input[@class='form-control medium']"));
-        fnHighlightMe(driver,element9);
-        element9.clear();
-        element9.sendKeys("06/10/2017");
+        /**************************************** AtlRecurringPaymentsAccrualReport Page **************************************************/
 
-        WebElement element10= driver.findElement(By.xpath("//div[@label='Payroll Date To']/div[@class='input-group date date-picker']/input[@class='form-control medium']"));
-        fnHighlightMe(driver,element10);
-        element10.clear();
-        element10.sendKeys("06/20/2017");
+        fnHighlightMe(driver,element7);
+        element7.click();
+        WebElement element14 = driver.findElement(By.xpath("//ul[@id='main-menu']/li[5]/ul/li[3]"));
+        fnHighlightMe(driver,element14);
+        element14.click();
+        downloadReportPdf(driver,prevWndCount);
 
-        WebElement element11= driver.findElement(By.xpath("//*[@id='command-bar-section']/command-button"));
-        fnHighlightMe(driver,element11);
-        final int prevWndCount2 = driver.getWindowHandles().size();
-        element11.click();
-        //driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
-        wait.until(new ExpectedCondition<Boolean>(){
-            public Boolean apply(WebDriver d){
-                return d.getWindowHandles().size() > prevWndCount2;
-            }
-        });
-
-
-        /************************************** Final Print Page *****************************************/
-        Set<String> grandChild_Child_ParentHandles=driver.getWindowHandles();
-        grandChild_Child_ParentHandles.remove(mainWindowHandle);
-        grandChild_Child_ParentHandles.remove(childWindowHandle);
-        driver.switchTo().window((String) grandChild_Child_ParentHandles.toArray()[0]);
-
-        captureScreenShot(driver);
-
-        driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
-
-        wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//select[@id='reportViewer_ReportToolbar_ExportGr_FormatList_DropDownList']")));
-        Select select5 = new Select(driver.findElement(By.xpath("//select[@id='reportViewer_ReportToolbar_ExportGr_FormatList_DropDownList']")));
-        select5.selectByVisibleText("Acrobat (PDF) file");
-
-        WebElement element12= driver.findElement(By.xpath("//input[@class='Enabled' and @title='Print']"));
-        fnHighlightMe(driver,element12);
-        element12.click();
-
-        /*************************************** PDF Export Box ******************************************/
-        String jacobDllVersionToUse = "jacob-1.18-x64.dll";
-        File file = new File("lib",jacobDllVersionToUse);
-        System.setProperty(LibraryLoader.JACOB_DLL_PATH, file.getAbsolutePath());
-        AutoItX x = new AutoItX();
-        x.winActivate("Opening AtlPerEventPaymentsReport.pdf");
-        x.sleep(2000);
-        x.controlSend("Opening AtlPerEventPaymentsReport.pdf","","","{ENTER}");
-
-        //driver.close();
         //driver.quit();
-
-
-
-
-
-
     }
-
 
     private static void fnHighlightMe(WebDriver driver, WebElement element) throws InterruptedException{
         //Creating JavaScriptExecuter Interface
@@ -196,6 +132,77 @@ public class App  {
 
     }
 
+    private static void downloadReportPdf(WebDriver driver, final int prevWndCount) throws InterruptedException
+    {
+        /************************************** Print Page *****************************************/
+
+        WebDriverWait wait = new WebDriverWait(driver,10);
+        wait.until(new ExpectedCondition<Boolean>(){
+            public Boolean apply(WebDriver d){
+                return d.getWindowHandles().size() > prevWndCount;
+            }
+        });
+        String mainWindowHandle=driver.getWindowHandle();
+        Set<String> childParentHandles=driver.getWindowHandles();
+        childParentHandles.remove(mainWindowHandle);
+        String childWindowHandle = (String)childParentHandles.toArray()[0];
+        driver.switchTo().window(childWindowHandle);
+
+        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+//        WebElement element9= driver.findElement(By.xpath("//div[@label='Payroll Date From']/div[@class='input-group date date-picker']/input[@class='form-control medium']"));
+//        fnHighlightMe(driver,element9);
+//        element9.clear();
+//        element9.sendKeys("06/10/2017");
+//
+//        WebElement element10= driver.findElement(By.xpath("//div[@label='Payroll Date To']/div[@class='input-group date date-picker']/input[@class='form-control medium']"));
+//        fnHighlightMe(driver,element10);
+//        element10.clear();
+//        element10.sendKeys("06/20/2017");
+
+        WebElement element11= driver.findElement(By.xpath("//*[@id='command-bar-section']/command-button"));
+        fnHighlightMe(driver,element11);
+        final int prevWndCount2 = driver.getWindowHandles().size();
+        element11.click();
+        wait.until(new ExpectedCondition<Boolean>(){
+            public Boolean apply(WebDriver d){
+                return d.getWindowHandles().size() > prevWndCount2;
+            }
+        });
+
+        /************************************** Final Print Page *****************************************/
+
+        Set<String> grandChild_Child_ParentHandles=driver.getWindowHandles();
+        grandChild_Child_ParentHandles.remove(mainWindowHandle);
+        grandChild_Child_ParentHandles.remove(childWindowHandle);
+        driver.switchTo().window((String) grandChild_Child_ParentHandles.toArray()[0]);
+
+        captureScreenShot(driver);
+
+        driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
+
+        wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//select[@id='reportViewer_ReportToolbar_ExportGr_FormatList_DropDownList']")));
+        Select select5 = new Select(driver.findElement(By.xpath("//select[@id='reportViewer_ReportToolbar_ExportGr_FormatList_DropDownList']")));
+        select5.selectByVisibleText("Acrobat (PDF) file");
+
+        WebElement element12= driver.findElement(By.xpath("//input[@class='Enabled' and @title='Print']"));
+        fnHighlightMe(driver,element12);
+        element12.click();
+
+        /*************************************** PDF Export Box ******************************************/
+
+        String jacobDllVersionToUse = "jacob-1.18-x64.dll";
+        File file = new File("lib",jacobDllVersionToUse);
+        System.setProperty(LibraryLoader.JACOB_DLL_PATH, file.getAbsolutePath());
+        AutoItX x = new AutoItX();
+        x.winActivate("Opening");
+        x.sleep(2000);
+        x.controlSend("Opening","","","{ENTER}");
+
+        driver.close();
+        driver.switchTo().window(childWindowHandle);
+        driver.close();
+        driver.switchTo().window(mainWindowHandle);
+    }
 }
 
 
