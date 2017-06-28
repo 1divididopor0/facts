@@ -31,14 +31,13 @@ public class App  {
         System.out.println(driver.getTitle());
 
         WebElement element1 = driver.findElement(By.id("tbxUserName"));
+        WebElement element2 = driver.findElement(By.id("tbxPassword"));
+        WebElement element3 = driver.findElement(By.xpath("//*[@id='btnSubmit']"));
+
         fnHighlightMe(driver,element1);
         element1.sendKeys("coreywei");
-
-        WebElement element2 = driver.findElement(By.id("tbxPassword"));
         fnHighlightMe(driver,element2);
         element2.sendKeys("FS2testing1!");
-
-        WebElement element3 = driver.findElement(By.xpath("//*[@id='btnSubmit']"));
         fnHighlightMe(driver,element3);
         element3.click();
 
@@ -46,25 +45,19 @@ public class App  {
 
         driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
         WebElement element4= driver.findElement(By.xpath("//*[@class='control-label' and contains(text(),'Department')]"));
-        fnHighlightMe(driver,element4);
-
         Select select1 = new Select(driver.findElement(By.xpath("//select[@ng-model='vm.departmentId']")));
-        select1.selectByVisibleText("MLB Remote");
-
-        driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
-
         WebElement element5= driver.findElement(By.xpath("//*[@class='control-label' and contains(text(),'Location')]"));
-        fnHighlightMe(driver,element5);
-
         Select select2 = new Select(driver.findElement(By.xpath("//select[@ng-model='vm.location']")));
-        select2.selectByVisibleText("Detroit, MI");
-
-        driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
-
         WebElement element6= driver.findElement(By.xpath("//*[@class='control-label' and contains(text(),'Venue')]"));
-        fnHighlightMe(driver,element6);
-
         Select select3 = new Select(driver.findElement(By.xpath("//select[@ng-model='vm.venueId']")));
+
+        fnHighlightMe(driver,element4);
+        select1.selectByVisibleText("MLB Remote");
+        driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+        fnHighlightMe(driver,element5);
+        select2.selectByVisibleText("Detroit, MI");
+        driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+        fnHighlightMe(driver,element6);
         select3.selectByVisibleText("Comerica Park");
 
         /**************************************** AtlPerEventPaymentsReport Page **************************************************/
@@ -72,27 +65,28 @@ public class App  {
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         final int prevWndCount = driver.getWindowHandles().size();
         WebElement element7= driver.findElement(By.xpath("//ul[@id='main-menu']/li[5]"));
+        WebElement element8= driver.findElement(By.xpath("//ul[@id='main-menu']/li[5]/ul/li[1]"));
+
         fnHighlightMe(driver,element7);
         element7.click();
-        WebElement element8= driver.findElement(By.xpath("//ul[@id='main-menu']/li[5]/ul/li[1]"));
         fnHighlightMe(driver,element8);
         element8.click();
         downloadReportPdf(driver,prevWndCount);
 
         /**************************************** AtlRecurringPaymentsReport Page **************************************************/
 
+        WebElement element13 = driver.findElement(By.xpath("//ul[@id='main-menu']/li[5]/ul/li[2]"));
         fnHighlightMe(driver,element7);
         element7.click();
-        WebElement element13 = driver.findElement(By.xpath("//ul[@id='main-menu']/li[5]/ul/li[2]"));
         fnHighlightMe(driver,element13);
         element13.click();
         downloadReportPdf(driver,prevWndCount);
 
         /**************************************** AtlRecurringPaymentsAccrualReport Page **************************************************/
 
+        WebElement element14 = driver.findElement(By.xpath("//ul[@id='main-menu']/li[5]/ul/li[3]"));
         fnHighlightMe(driver,element7);
         element7.click();
-        WebElement element14 = driver.findElement(By.xpath("//ul[@id='main-menu']/li[5]/ul/li[3]"));
         fnHighlightMe(driver,element14);
         element14.click();
         downloadReportPdf(driver,prevWndCount);
@@ -159,9 +153,9 @@ public class App  {
 //        element10.clear();
 //        element10.sendKeys("06/20/2017");
 
+        final int prevWndCount2 = driver.getWindowHandles().size();
         WebElement element11= driver.findElement(By.xpath("//*[@id='command-bar-section']/command-button"));
         fnHighlightMe(driver,element11);
-        final int prevWndCount2 = driver.getWindowHandles().size();
         element11.click();
         wait.until(new ExpectedCondition<Boolean>(){
             public Boolean apply(WebDriver d){
@@ -182,9 +176,8 @@ public class App  {
 
         wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//select[@id='reportViewer_ReportToolbar_ExportGr_FormatList_DropDownList']")));
         Select select5 = new Select(driver.findElement(By.xpath("//select[@id='reportViewer_ReportToolbar_ExportGr_FormatList_DropDownList']")));
-        select5.selectByVisibleText("Acrobat (PDF) file");
-
         WebElement element12= driver.findElement(By.xpath("//input[@class='Enabled' and @title='Print']"));
+        select5.selectByVisibleText("Acrobat (PDF) file");
         fnHighlightMe(driver,element12);
         element12.click();
 
@@ -204,6 +197,3 @@ public class App  {
         driver.switchTo().window(mainWindowHandle);
     }
 }
-
-
-
