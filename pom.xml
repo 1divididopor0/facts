@@ -84,6 +84,16 @@
       <artifactId>commons-lang3</artifactId>
       <version>3.1</version>
     </dependency>
+      <dependency>
+          <groupId>org.seleniumhq.selenium</groupId>
+          <artifactId>selenium-ie-driver</artifactId>
+          <version>3.4.0</version>
+      </dependency>
+    <dependency>
+      <groupId>org.seleniumhq.selenium</groupId>
+      <artifactId>selenium-ie-driver</artifactId>
+      <version>3.4.0</version>
+    </dependency>
 
 
   </dependencies>

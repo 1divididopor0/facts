@@ -19,9 +19,11 @@ public class App  {
 
     public static void main (String[] args ) throws InterruptedException {
         System.setProperty("webdriver.gecko.driver","C:\\Users\\MindSparkQA\\Documents\\facts\\geckodriver.exe");
+        System.setProperty("webdriver.ie.driver","C:\\Users\\MindSparkQA\\IEDriverServer_Win32_3.4.0\\IEDriverServer.exe");
 
         FirefoxDriver driver = new FirefoxDriver();
         //WebDriver driver = new ChromeDriver();
+        //WebDriver driver = new InternetExplorerDriver();
 
       /********************** Login Page ************************************************/
 
@@ -30,6 +32,8 @@ public class App  {
         driver.manage().window().maximize();
         System.out.println(driver.getTitle());
 
+        WebDriverWait wait = new WebDriverWait(driver,15);
+        wait.until(ExpectedConditions.elementToBeClickable(By.id("tbxUserName")));
         WebElement element1 = driver.findElement(By.id("tbxUserName"));
         WebElement element2 = driver.findElement(By.id("tbxPassword"));
         WebElement element3 = driver.findElement(By.xpath("//*[@id='btnSubmit']"));
@@ -130,8 +134,8 @@ public class App  {
     {
         /************************************** Print Page *****************************************/
 
-        WebDriverWait wait = new WebDriverWait(driver,10);
-        wait.until(new ExpectedCondition<Boolean>(){
+        WebDriverWait wait2 = new WebDriverWait(driver,10);
+        wait2.until(new ExpectedCondition<Boolean>(){
             public Boolean apply(WebDriver d){
                 return d.getWindowHandles().size() > prevWndCount;
             }
@@ -157,7 +161,7 @@ public class App  {
         WebElement element11= driver.findElement(By.xpath("//*[@id='command-bar-section']/command-button"));
         fnHighlightMe(driver,element11);
         element11.click();
-        wait.until(new ExpectedCondition<Boolean>(){
+        wait2.until(new ExpectedCondition<Boolean>(){
             public Boolean apply(WebDriver d){
                 return d.getWindowHandles().size() > prevWndCount2;
             }
@@ -174,7 +178,7 @@ public class App  {
 
         driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
 
-        wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//select[@id='reportViewer_ReportToolbar_ExportGr_FormatList_DropDownList']")));
+        wait2.until(ExpectedConditions.elementToBeClickable(By.xpath("//select[@id='reportViewer_ReportToolbar_ExportGr_FormatList_DropDownList']")));
         Select select5 = new Select(driver.findElement(By.xpath("//select[@id='reportViewer_ReportToolbar_ExportGr_FormatList_DropDownList']")));
         WebElement element12= driver.findElement(By.xpath("//input[@class='Enabled' and @title='Print']"));
         select5.selectByVisibleText("Acrobat (PDF) file");
@@ -187,8 +191,20 @@ public class App  {
         File file = new File("lib",jacobDllVersionToUse);
         System.setProperty(LibraryLoader.JACOB_DLL_PATH, file.getAbsolutePath());
         AutoItX x = new AutoItX();
+
+        // For IE
+        // I tried the following code but it wasn't working. -RS
+        //x.sleep(20000);
+        //String frame = x.winGetHandle("[Class:IEFrame]");
+        //x.controlSend(frame,"",x.controlGetHandle(frame,"","[Class:DirectUIHWND;INSTANCE:1]"),"!N");
+        //x.controlSend(frame,"",x.controlGetHandle(frame,"","[Class:DirectUIHWND;INSTANCE:1]"),"{TAB}");
+        //x.sleep(500);
+        //x.controlSend(frame,"",x.controlGetHandle(frame,"","[Class:DirectUIHWND;INSTANCE:1]"),"{TAB}");
+        //x.sleep(500);
+        //x.controlSend(frame,"",x.controlGetHandle(frame,"","[Class:DirectUIHWND;INSTANCE:1]"),"{ENTER}");
+
+        // For other browsers
         x.winActivate("Opening");
-        x.sleep(2000);
         x.controlSend("Opening","","","{ENTER}");
 
         driver.close();
